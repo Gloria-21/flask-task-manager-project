@@ -85,8 +85,8 @@ def profile(username):
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        return render_template("profile.html", username=username)    
-    
+        return render_template("profile.html", username=username)   
+   
     return redirect(url_for("login"))
 
 
@@ -100,7 +100,9 @@ def logout():
 
 @app.route("/add_task")
 def add_task():
-    return render_template("add_task.html")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_task.html", categories=categories)
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
